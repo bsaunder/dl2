@@ -117,7 +117,7 @@
 				<version>${version.plugin.war}</version>
 				<configuration>
 					<outputDirectory>target</outputDirectory>
-					<warName>dl2-${project.version}</warName>
+					<warName>dl2</warName>
 				</configuration>
 			</plugin>
 
@@ -303,8 +303,47 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- JBoss AS7 Plugin (For Deploying to EAP6) -->
+			<plugin>
+				<groupId>org.jboss.as.plugins</groupId>
+				<artifactId>jboss-as-maven-plugin</artifactId>
+				<version>7.5.Final</version>
+				<executions>
+					<execution>
+						<id>deploy</id>
+						<phase>install</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+						<configuration>
+							<filename>dl2.war</filename>
+							<skip>${deploy.skip}</skip>
+						</configuration>
+					</execution>
+					<execution>
+						<id>undeploy</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>undeploy</goal>
+						</goals>
+						<configuration>
+							<filename>dl2.war</filename>
+							<skip>${deploy.skip}</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>deploy</id>
+			<properties>
+				<deploy.skip>false</deploy.skip>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>
