@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.bryansaunders</groupId>
 	<artifactId>dl2</artifactId>
@@ -47,6 +48,8 @@
 		<system>Travis-CI</system>
 		<url>https://travis-ci.org/bsaunder/dl2</url>
 	</ciManagement>
+
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -177,7 +180,14 @@
 			<artifactId>enunciate-core-annotations</artifactId>
 			<version>${version.plugin.enunciate}</version>
 		</dependency>
-		
+
+		<!-- Configuration -->
+		<dependency>
+			<groupId>com.github.chrisruffalo</groupId>
+			<artifactId>ee-config</artifactId>
+			<version>1.4</version>
+		</dependency>
+
 		<!-- Unit Testing -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -204,7 +214,23 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
 	<build>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
