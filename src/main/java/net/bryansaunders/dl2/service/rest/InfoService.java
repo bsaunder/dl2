@@ -12,17 +12,18 @@ import javax.ws.rs.core.MediaType;
  * Information Service for providing information about the currently running application.
  * 
  * @author Bryan Saunders <btsaunde@gmail.com>
+
  */
 @Path("/info")
 public interface InfoService {
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/version")
     /**
      * Returns the current application version.
      * 
      * @return JSON String
      */
-    public String getVersion();
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/version")
+    String getVersion();
 }
