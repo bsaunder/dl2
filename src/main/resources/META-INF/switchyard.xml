@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:resteasy="urn:switchyard-component-resteasy:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:sy="urn:switchyard-config:switchyard:1.1" name="dl2" targetNamespace="urn:net.bryansaunders:dl2:1.0">
+  <sca:composite name="dl2" targetNamespace="urn:net.bryansaunders:dl2:1.0">
+    <sca:service name="InfoService" promote="InfoServiceImpl/InfoServiceImpl">
+      <resteasy:binding.rest name="infoServiceRest">
+        <resteasy:contextMapper includes=".*"/>
+        <resteasy:interfaces>net.bryansaunders.dl2.resource.InfoResource</resteasy:interfaces>
+        <resteasy:contextPath>dl2</resteasy:contextPath>
+      </resteasy:binding.rest>
+    </sca:service>
+    <sca:component name="InfoServiceImpl">
+      <bean:implementation.bean class="net.bryansaunders.dl2.service.impl.InfoServiceImpl"/>
+      <sca:service name="InfoServiceImpl">
+        <sca:interface.java interface="net.bryansaunders.dl2.service.InfoService"/>
+      </sca:service>
+    </sca:component>
+  </sca:composite>
+</sy:switchyard>
