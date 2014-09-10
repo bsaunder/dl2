@@ -73,6 +73,9 @@
 		<version.plugin.war>2.1.1</version.plugin.war>
 
 		<version.jaxrs-api>1.0.1.Final-redhat-2</version.jaxrs-api>
+		<version.junit>4.8.1</version.junit>
+		<version.mockito>1.9.0</version.mockito>
+		<version.powermock>1.4.12</version.powermock>
 		<version.resteasy>2.3.6.Final</version.resteasy>
 	</properties>
 
@@ -175,6 +178,32 @@
 			<groupId>org.codehaus.enunciate</groupId>
 			<artifactId>enunciate-core-annotations</artifactId>
 			<version>${version.plugin.enunciate}</version>
+		</dependency>
+		
+		<!-- Unit Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${version.junit}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${version.mockito}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>${version.powermock}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>${version.powermock}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
