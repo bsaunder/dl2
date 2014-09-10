@@ -7,7 +7,7 @@
 	<version>0.0.2-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>net.bryansaunders:dl2</name>
+	<name>DL2</name>
 	<url>https://github.com/bsaunder/dl2</url>
 	<description>REST Based API for Managing Dive Logs.</description>
 	<inceptionYear>2014</inceptionYear>
@@ -49,8 +49,6 @@
 		<url>https://travis-ci.org/bsaunder/dl2</url>
 	</ciManagement>
 
-
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.6</maven.compiler.source>
@@ -74,6 +72,8 @@
 		<version.plugin.war>2.1.1</version.plugin.war>
 
 		<version.jaxrs-api>1.0.1.Final-redhat-2</version.jaxrs-api>
+		<version.javaee>1.0.0.Final</version.javaee>
+		<version.jstl>1.2</version.jstl>
 		<version.junit>4.8.1</version.junit>
 		<version.mockito>1.9.0</version.mockito>
 		<version.powermock>1.4.12</version.powermock>
@@ -143,6 +143,20 @@
 	</pluginRepositories>
 
 	<dependencies>
+		<!-- JEE6 -->
+		<dependency>
+			<groupId>org.jboss.spec</groupId>
+			<artifactId>jboss-javaee-6.0</artifactId>
+			<version>${version.javaee}</version>
+			<type>pom</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${version.jstl}</version>
+		</dependency>
+
 		<!-- JAX-RS -->
 		<dependency>
 			<groupId>org.jboss.spec.javax.ws.rs</groupId>

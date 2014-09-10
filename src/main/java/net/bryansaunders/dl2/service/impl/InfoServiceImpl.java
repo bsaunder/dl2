@@ -1,7 +1,9 @@
 /**
  * 
  */
-package net.bryansaunders.dl2.service.impl;/*
+package net.bryansaunders.dl2.service.impl;
+
+/*
  * #%L
  * net.bryansaunders:dl2
  * %%
@@ -23,8 +25,17 @@ package net.bryansaunders.dl2.service.impl;/*
  * #L%
  */
 
+import java.util.Properties;
 
+import javax.inject.Inject;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import net.bryansaunders.dl2.model.Information;
 import net.bryansaunders.dl2.service.rest.InfoService;
+
+import com.github.chrisruffalo.eeconfig.annotations.Configuration;
+import com.github.chrisruffalo.eeconfig.annotations.Source;
 
 /**
  * @see InfoService
@@ -33,15 +44,27 @@ import net.bryansaunders.dl2.service.rest.InfoService;
  */
 public class InfoServiceImpl implements InfoService {
 
+    /**
+     * Application Configuration.
+     */
+    @Inject
+    @Configuration(sources = { @Source(value = "resource:application.properties") })
+    private Properties appConfig;
+
     /*
      * (non-Javadoc)
-     * @see net.bryansaunders.dl2.service.InfoService#getVersion()
+     * 
+     * @see net.bryansaunders.dl2.service.rest.InfoService#getInformation()
      */
     @Override
-    public String getVersion() {
-        // TODO Implement Version Logic
-        
-        return "{\"version\":\"0.0.1=SNAPSHOT\"}";
+    public Response getInformation() {
+        Information info = new Information();
+
+        info.setName(this.appConfig.getProperty("project.name"));
+        info.setDescription(this.appConfig.getProperty("project.description"));
+        info.setVersion(this.appConfig.getProperty("project.version"));
+
+        return Response.status(Status.OK).entity(info).build();
     }
 
 }

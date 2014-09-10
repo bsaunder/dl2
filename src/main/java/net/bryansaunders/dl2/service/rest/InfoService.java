@@ -1,7 +1,9 @@
 /**
  * 
  */
-package net.bryansaunders.dl2.service.rest;/*
+package net.bryansaunders.dl2.service.rest;
+
+/*
  * #%L
  * net.bryansaunders:dl2
  * %%
@@ -23,28 +25,26 @@ package net.bryansaunders.dl2.service.rest;/*
  * #L%
  */
 
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * Information Service for providing information about the currently running application.
  * 
  * @author Bryan Saunders <btsaunde@gmail.com>
-
  */
 @Path("/info")
 public interface InfoService {
 
     /**
-     * Returns the current application version.
+     * Returns the current application information.
      * 
      * @return JSON String
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/version")
-    String getVersion();
+    Response getInformation();
 }
