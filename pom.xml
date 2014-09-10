@@ -5,13 +5,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.bryansaunders</groupId>
 	<artifactId>dl2</artifactId>
-	<version>0.0.0</version>
+	<version>0.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>net.bryansaunders:dl2</name>
 	<url>https://github.com/bsaunder/dl2</url>
 	<description>REST Based API for Managing Dive Logs.</description>
-	<inceptionYear>9-9-2014</inceptionYear>
+	<inceptionYear>2014</inceptionYear>
 
 	<licenses>
 		<license>
@@ -26,9 +26,10 @@
 	</organization>
 
 	<scm>
-		<developerConnection>https://github.com/bsaunder/dl2.git</developerConnection>
-		<connection>https://github.com/bsaunder/dl2.git</connection>
+		<connection>scm:git:ssh://github.com/bsaunder/dl2.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/bsaunder/dl2.git</developerConnection>
 		<url>https://github.com/bsaunder/dl2</url>
+		<tag>HEAD</tag>
 	</scm>
 
 	<issueManagement>
@@ -36,18 +37,36 @@
 		<system>GitHub</system>
 	</issueManagement>
 
+	<distributionManagement>
+		<repository>
+			<id>internal.repo</id>
+			<name>Temporary Staging Repository</name>
+			<url>file://${project.build.directory}/mvn-repo</url>
+		</repository>
+	</distributionManagement>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
-		
+
 		<version.plugin.checkstyle>2.8</version.plugin.checkstyle>
+		<version.plugin.enunciate>1.25</version.plugin.enunciate>
+		<version.plugin.failsafe>2.12.2</version.plugin.failsafe>
 		<version.plugin.findbugs>2.4.0</version.plugin.findbugs>
+		<version.plugin.fluidoskin>1.2.3-SNAPSHOT</version.plugin.fluidoskin>
 		<version.plugin.jacoco>0.5.8.201207111220</version.plugin.jacoco>
+		<version.plugin.javadoc>2.7</version.plugin.javadoc>
+		<version.plugin.jxr>2.1</version.plugin.jxr>
+		<version.plugin.license>1.2</version.plugin.license>
 		<version.plugin.pmd>2.7</version.plugin.pmd>
+		<version.plugin.projectinfo>2.2</version.plugin.projectinfo>
+		<version.plugin.release>2.5</version.plugin.release>
+		<version.plugin.surefire>2.12</version.plugin.surefire>
+		<version.plugin.site>3.0</version.plugin.site>
+		<version.plugin.taglist>2.4</version.plugin.taglist>
 		<version.plugin.war>2.1.1</version.plugin.war>
-		
-		
+
 		<version.jaxrs-api>1.0.1.Final-redhat-2</version.jaxrs-api>
 		<version.resteasy>2.3.6.Final</version.resteasy>
 	</properties>
@@ -78,12 +97,17 @@
 			<version>${version.resteasy}</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- Metrics & Analysis -->
 		<dependency>
 			<groupId>org.jacoco</groupId>
 			<artifactId>org.jacoco.core</artifactId>
 			<version>${version.plugin.jacoco}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.enunciate</groupId>
+			<artifactId>enunciate-core-annotations</artifactId>
+			<version>${version.plugin.enunciate}</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -93,10 +117,76 @@
 				<version>${version.plugin.war}</version>
 				<configuration>
 					<outputDirectory>target</outputDirectory>
-					<warName>dl2</warName>
+					<warName>dl2-${project.version}</warName>
 				</configuration>
 			</plugin>
-			
+
+			<!-- Release Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${version.plugin.release}</version>
+				<configuration>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+				</configuration>
+			</plugin>
+
+			<!-- Surefire (Unit Tests) Plugin -->
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${version.plugin.surefire}</version>
+			</plugin>
+
+			<!-- Failsafe (Integration Tests) Plugin -->
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${version.plugin.failsafe}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+						<configuration>
+							<failIfNoTests>false</failIfNoTests>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- License Plugin -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>${version.plugin.license}</version>
+				<configuration>
+					<verbose>false</verbose>
+					<licenseName>gpl_v3</licenseName>
+					<licenseFile>${basedir}/LICENSE</licenseFile>
+				</configuration>
+				<executions>
+					<execution>
+						<id>first</id>
+						<goals>
+							<goal>update-file-header</goal>
+						</goals>
+						<phase>process-sources</phase>
+						<configuration>
+							<roots>
+								<root>src/main</root>
+								<root>src/test</root>
+							</roots>
+						</configuration>
+					</execution>
+					<execution>
+						<id>update-licenses</id>
+						<goals>
+							<goal>update-project-license</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 			<!-- CheckStyle -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -162,7 +252,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<!-- JaCoCo Code Coverage -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
@@ -180,6 +270,35 @@
 						<phase>post-integration-test</phase>
 						<goals>
 							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- JavaDoc Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${version.plugin.javadoc}</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Source Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
 						</goals>
 					</execution>
 				</executions>
