@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.bryansaunders.dl2.resource;
+package net.bryansaunders.dl2.service.rest;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -9,20 +9,19 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- * 
  * Information Service for providing information about the currently running application.
  * 
  * @author Bryan Saunders <btsaunde@gmail.com>
- * 
  */
 @Path("/info")
-public interface InfoResource {
+public interface InfoService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/version")
     /**
      * Returns the current application version.
+     * 
      * @return JSON String
      */
     public String getVersion();
