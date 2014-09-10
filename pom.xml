@@ -44,6 +44,11 @@
 			<url>file://${project.build.directory}/mvn-repo</url>
 		</repository>
 	</distributionManagement>
+	
+	<ciManagement>
+		<system>Travis-CI</system>
+		<url>https://travis-ci.org/bsaunder/dl2</url>
+	</ciManagement>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
