@@ -1,6 +1,6 @@
 language: java
 jdk: openjdk6
-script: "mvn install -Parquillian-jboss-managed"
+script: travis_wait mvn install -Parquillian-jboss-managed
 notifications:
   email:
     recipients:
