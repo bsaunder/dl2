@@ -1,0 +1,37 @@
+FORMAT: 1A
+
+# DL2
+DL2 is a service for managing Dive Logs and related information.
+
+# Group Information API
+Information related resources of the **DL2 API**
+
+## Information [/info]
+The Information resource contains all of the information related to the currently running application.
+
+The Information resource has the following attributes:
+
+- name
+- description
+- version
+
++ Model (application/json)
+
+    JSON representation of an Information resource
+
+    + Body
+
+            {
+                "name": "DL2",
+                "description": "Description of DL2",
+                "version": "Current DL2 Version String"
+            }
+
+### Get Application Information [GET]
++ Response 200 (application/json)
+
+        {
+            "name": "DL2",
+            "description": "DL2 is a REST API",
+            "version": "0.0.1"
+        }
