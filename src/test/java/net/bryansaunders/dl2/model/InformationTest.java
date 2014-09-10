@@ -1,4 +1,7 @@
-package net.bryansaunders.dl2;/*
+/**
+ * 
+ */
+package net.bryansaunders.dl2.model;/*
  * #%L
  * net.bryansaunders:dl2
  * %%
@@ -26,20 +29,34 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 /**
- * Empty Test Class to Pass Build.
+ * Unit Tests for Information Model.
  * 
  * @author Bryan Saunders <btsaunde@gmail.com>
- *
+ * 
  */
-// TODO Delete This Class when Actual Tests are Added.
-public class EmptyTest {
+public class InformationTest {
+
+    private static final String NAME = "DL2";
+    private static final String DESC = "Description";
+    private static final String VER = "Version X";
 
     /**
-     * Tests Nothing.
+     * Tests that the Setters and Getters are working.
      */
     @Test
-    public void test() {
-        Assert.assertTrue(true);
+    public void ifValuesSameThenPass() {
+        // given
+        Information info = new Information();
+
+        // when
+        info.setDescription(InformationTest.DESC);
+        info.setName(InformationTest.NAME);
+        info.setVersion(InformationTest.VER);
+
+        // then
+        Assert.assertEquals(InformationTest.NAME, info.getName());
+        Assert.assertEquals(InformationTest.DESC, info.getDescription());
+        Assert.assertEquals(InformationTest.VER, info.getVersion());
     }
 
 }
