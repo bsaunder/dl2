@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.bryansaunders</groupId>
 	<artifactId>dl2</artifactId>
@@ -53,29 +54,39 @@
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
 
+		<version.bom.arquillian>1.1.5.Final</version.bom.arquillian>
+		<version.bom.shrinkwrap>2.1.1</version.bom.shrinkwrap>
+
 		<version.plugin.checkstyle>2.8</version.plugin.checkstyle>
 		<version.plugin.enunciate>1.25</version.plugin.enunciate>
 		<version.plugin.failsafe>2.12.2</version.plugin.failsafe>
-		<version.plugin.findbugs>2.4.0</version.plugin.findbugs>
+		<version.plugin.findbugs>2.5.5</version.plugin.findbugs>
 		<version.plugin.fluidoskin>1.2.3-SNAPSHOT</version.plugin.fluidoskin>
-		<version.plugin.jacoco>0.5.8.201207111220</version.plugin.jacoco>
+		<version.plugin.jacoco>0.6.3.201306030806</version.plugin.jacoco>
 		<version.plugin.javadoc>2.7</version.plugin.javadoc>
+		<version.plugin.jbossas>7.5.Final</version.plugin.jbossas>
 		<version.plugin.jxr>2.1</version.plugin.jxr>
 		<version.plugin.license>1.2</version.plugin.license>
 		<version.plugin.pmd>2.7</version.plugin.pmd>
 		<version.plugin.projectinfo>2.2</version.plugin.projectinfo>
 		<version.plugin.release>2.5</version.plugin.release>
+		<version.plugin.source>2.3</version.plugin.source>
 		<version.plugin.surefire>2.12</version.plugin.surefire>
 		<version.plugin.site>3.0</version.plugin.site>
 		<version.plugin.taglist>2.4</version.plugin.taglist>
 		<version.plugin.war>2.1.1</version.plugin.war>
 
+		<version.eeconfig>1.4</version.eeconfig>
 		<version.jaxrs-api>1.0.1.Final-redhat-2</version.jaxrs-api>
 		<version.javaee>1.0.0.Final</version.javaee>
+		<version.jbossas>7.1.1.Final</version.jbossas>
+		<version.jboassas-arg-managed>7.1.1.Final</version.jboassas-arg-managed>
+		<version.jboassas-arg-remote>7.1.1.Final</version.jboassas-arg-remote>
 		<version.jstl>1.2</version.jstl>
 		<version.junit>4.8.1</version.junit>
 		<version.mockito>1.9.0</version.mockito>
 		<version.powermock>1.4.12</version.powermock>
+		<version.restassured>1.6.2</version.restassured>
 		<version.resteasy>2.3.6.Final</version.resteasy>
 	</properties>
 
@@ -141,6 +152,25 @@
 		</pluginRepository>
 	</pluginRepositories>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.shrinkwrap.resolver</groupId>
+				<artifactId>shrinkwrap-resolver-bom</artifactId>
+				<version>${version.bom.shrinkwrap}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.arquillian</groupId>
+				<artifactId>arquillian-bom</artifactId>
+				<version>${version.bom.arquillian}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<!-- JEE6 -->
 		<dependency>
@@ -198,7 +228,7 @@
 		<dependency>
 			<groupId>com.github.chrisruffalo</groupId>
 			<artifactId>ee-config</artifactId>
-			<version>1.4</version>
+			<version>${version.eeconfig}</version>
 		</dependency>
 
 		<!-- Unit Testing -->
@@ -224,6 +254,33 @@
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-api-mockito</artifactId>
 			<version>${version.powermock}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- REST-assured -->
+		<dependency>
+			<groupId>com.jayway.restassured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>${version.restassured}</version>
+		</dependency>
+
+		<!-- Arquillian -->
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.protocol</groupId>
+			<artifactId>arquillian-protocol-servlet</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- <dependency> <groupId>org.jboss.arquillian.extension</groupId> <artifactId>arquillian-jacoco</artifactId> 
+			<version>1.0.0.Alpha6</version> <scope>test</scope> </dependency> -->
+		<dependency>
+			<groupId>org.jboss.shrinkwrap.resolver</groupId>
+			<artifactId>shrinkwrap-resolver-depchain</artifactId>
+			<type>pom</type>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -387,26 +444,11 @@
 			</plugin>
 
 			<!-- JaCoCo Code Coverage -->
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${version.plugin.jacoco}</version>
-				<executions>
-					<execution>
-						<id>jacoco-initialize</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>jacoco-site</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<!-- <plugin> <groupId>org.jacoco</groupId> <artifactId>jacoco-maven-plugin</artifactId> 
+				<version>${version.plugin.jacoco}</version> <executions> <execution> <id>jacoco-initialize</id> 
+				<goals> <goal>prepare-agent</goal> </goals> </execution> <execution> <id>jacoco-site</id> 
+				<phase>post-integration-test</phase> <goals> <goal>report</goal> </goals> 
+				</execution> </executions> </plugin> -->
 
 			<!-- JavaDoc Plugin -->
 			<plugin>
@@ -427,6 +469,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>${version.plugin.source}</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -448,7 +491,7 @@
 					<plugin>
 						<groupId>org.jboss.as.plugins</groupId>
 						<artifactId>jboss-as-maven-plugin</artifactId>
-						<version>7.5.Final</version>
+						<version>${version.plugin.jbossas}</version>
 						<executions>
 							<execution>
 								<id>deploy</id>
@@ -473,6 +516,67 @@
 								</configuration>
 							</execution>
 						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>arquillian-jboss-local</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.jboss.as</groupId>
+					<artifactId>jboss-as-arquillian-container-remote</artifactId>
+					<version>${version.jboassas-arg-remote}</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>arquillian-jboss-managed</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.jboss.as</groupId>
+					<artifactId>jboss-as-arquillian-container-managed</artifactId>
+					<version>${version.jboassas-arg-managed}</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>unpack</id>
+								<phase>process-test-classes</phase>
+								<goals>
+									<goal>unpack</goal>
+								</goals>
+								<configuration>
+									<artifactItems>
+										<artifactItem>
+											<groupId>org.jboss.as</groupId>
+											<artifactId>jboss-as-dist</artifactId>
+											<version>${version.jbossas}</version>
+											<type>zip</type>
+											<overWrite>false</overWrite>
+											<outputDirectory>target</outputDirectory>
+										</artifactItem>
+									</artifactItems>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<configuration>
+							<systemPropertyVariables>
+								<arquillian.launch>jbossas-managed</arquillian.launch>
+							</systemPropertyVariables>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>

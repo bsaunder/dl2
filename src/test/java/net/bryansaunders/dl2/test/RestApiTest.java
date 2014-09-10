@@ -1,6 +1,9 @@
-package net.bryansaunders.dl2;/*
+/**
+ * 
+ */
+package net.bryansaunders.dl2.test;/*
  * #%L
- * net.bryansaunders:dl2
+ * DL2
  * %%
  * Copyright (C) 2014 Bryan Saunders
  * %%
@@ -21,25 +24,32 @@ package net.bryansaunders.dl2;/*
  */
 
 
-import junit.framework.Assert;
-
-import org.junit.Test;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Ignore;
 
 /**
- * Empty Test Class to Pass Build.
+ * Base Test class for REST API Tests.
  * 
  * @author Bryan Saunders <btsaunde@gmail.com>
- *
+ * 
  */
-// TODO Delete This Class when Actual Tests are Added.
-public class EmptyIT {
+@Ignore
+public abstract class RestApiTest {
 
     /**
-     * Tests Nothing.
+     * Root URL.
      */
-    @Test
-    public void test() {
-        Assert.assertTrue(true);
+    protected static final String URL_ROOT = "http://localhost:8080/dl2_test/api";
+
+    /**
+     * Creates Arquillian Deployment Container.
+     * 
+     * @return deployment container
+     */
+    @Deployment
+    public static WebArchive createDeployment() {
+        return DeploymentFactory.getRestApiDeployment();
     }
 
 }

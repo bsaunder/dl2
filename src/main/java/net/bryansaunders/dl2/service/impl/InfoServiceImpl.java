@@ -58,7 +58,7 @@ public class InfoServiceImpl implements InfoService {
      */
     @Override
     public Response getInformation() {
-        Information info = new Information();
+        final Information info = new Information();
 
         info.setName(this.appConfig.getProperty("project.name"));
         info.setDescription(this.appConfig.getProperty("project.description"));
